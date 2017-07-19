@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:mulerequester="http://www.mulesoft.org/schema/mule/mulerequester" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/mulerequester http://www.mulesoft.org/schema/mule/mulerequester/current/mule-mulerequester.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+    <file:connector name="no-delete-file-connector" autoDelete="false" streaming="false" validateConnections="true" doc:name="File"/>
+    <flow name="email-addressFlow">
+        <http:listener config-ref="sharedHTTP_Listener" path="/email/address" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.inboundProperties['http.method'] == 'POST']">
+                <set-variable variableName="flowname" value="#[(payload.'flowname' == empty)?'default':payload.'flowname').toLowerCase().replaceAll('/','').replaceAll(' ', '').replaceAll('-', '')]" doc:name="post flow name"/>
+                <set-variable variableName="opt" value="#[(payload.'opt' == empty)?'default':payload.'opt').toLowerCase()]" doc:name="post opt"/>
+                <set-variable variableName="dosave" value="#[(payload.'find' == 'Find')?'false':'true']" doc:name="dosave"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="flowname" value="#[((message.inboundProperties.'http.query.params'.flowname == empty) ? 'default' : message.inboundProperties.'http.query.params'.flowname).toLowerCase().replaceAll('/','').replaceAll(' ', '').replaceAll('-', '')]" doc:name="flow name"/>
+                <set-variable variableName="opt" value="error" doc:name="opt"/>
+                <set-variable variableName="dosave" value="false" doc:name="dosave"/>
+            </otherwise>
+        </choice>
+        
+        <set-variable variableName="errorSel" value="" doc:name="errorSel"/>
+        <set-variable variableName="messageSel" value="" doc:name="messageSel"/>
+        <set-variable variableName="noteSel" value="" doc:name="noteSel"/>
+        <set-variable variableName="payloadSel" value="" doc:name="messageSel"/>
+        
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.opt == 'message']">
+                <set-variable variableName="filename" value="message-#[flowVars.flowname].txt" doc:name="message file name"/>
+                <set-variable variableName="messageSel" value="selected" doc:name="messageSel"/>
+            </when>
+            <when expression="#[flowVars.opt == 'note']">
+                <set-variable variableName="filename" value="note-#[flowVars.flowname].txt" doc:name="note file name"/>
+                <set-variable variableName="noteSel" value="selected" doc:name="noteSel"/>
+            </when>
+            <when expression="#[flowVars.opt == 'log']">
+                <set-variable variableName="filename" value="log-#[flowVars.flowname].txt" doc:name="log file name"/>
+                <set-variable variableName="logSel" value="selected" doc:name="logSel"/>
+            </when>
+            <when expression="#[flowVars.opt == 'payload']">
+                <set-variable variableName="filename" value="payload-#[flowVars.flowname].txt" doc:name="payload file name"/>
+                <set-variable variableName="payloadSel" value="selected" doc:name="messageSel"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="filename" value="error-default.txt" doc:name="error file name"/>
+                <set-variable variableName="errorSel" value="selected" doc:name="errorSel"/>
+            </otherwise>
+        </choice>
+        <!-- mulerequester:request resource="file://src/main/resources/#[flowVars.filename].txt?connector=no-delete-file-connector" doc:name="Mule Requester-file"/-->
+        <choice doc:name="Choice on http methods" tracking:enable-default-events="true">
+            <when expression="#[flowVars.dosave=='true']">
+                <set-payload value="#[payload.'eaddress']" doc:name="Set Payload"/>
+                <file:outbound-endpoint path="../emailaddress" outputPattern="#[ flowVars.filename]" responseTimeout="10000" doc:name="File"/>
+            </when>
+            <otherwise>
+                <mulerequester:request resource="file://../emailaddress/#[flowVars.filename]?connector=no-delete-file-connector" doc:name="Mule Requester-file"/>
+                <set-payload value="#[(payload == empty) ? '' : payload]" doc:name="Set Payload"/>
+                <object-to-string-transformer doc:name="Object to String"/>
+            </otherwise>
+        </choice>
+        <!-- set-variable variableName="flowname" value="#[(flowVars.flowname == 'default') ? '' : flowVars.flowname]" doc:name="flow name"/ -->
+        <parse-template location="${email.template}" doc:name="Parse emailinput Template"/>
+        <!-- set-payload value="#[(payload == empty) ? '' : payload]" doc:name="Set Payload"/ -->
+    </flow>
+</mule>

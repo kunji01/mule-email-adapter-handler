@@ -1,0 +1,21 @@
+<html>
+<body>
+	<b><font color=green>Manage Email Addresses for Mule Instance</font></b>
+	<P>
+	<form method="post" action="/email/address" name="emailform">
+		App Name: <input type="text" value="#[flowVars.flowname]" name="flowname" size="50" />&nbsp;&nbsp;EMail
+		for: <select name="opt"><option value="error" #[flowVars.errorSel]>Error</option>
+			<option value="log"  #[flowVars.logSel]>Log</option>
+			<option value="message"  #[flowVars.messageSel]>Message</option>
+			<option value="note"  #[flowVars.noteSel]>Note</option>
+			<option value="payload"  #[flowVars.payloadSel]>Payload</option></select>&nbsp;
+			<input type="submit" value="Find" name="find" /><br>
+		<br>EMail Address(es, to delimit with a comma ,):<br>
+		<textarea rows=10 cols=70 name=eaddress>#[payload]</textarea>
+		<br>
+		<input type="submit" value="Submit" name="change" />
+	</form>
+	<font size=2>Note: be sure inputing a right Flow Name. Empty the address to stop sending email.</font>
+	<br>
+</body>
+</html>
