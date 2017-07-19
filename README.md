@@ -15,10 +15,10 @@
 . http://localhost:8383/utilities/email/exception/test</br>
 . http://localhost:8383/utilities/email/note/test</br>
 . http://localhost:8383/utilities/email/log/test</br>
-. check your email inbox</br>
+. check your email inbox</br><br/>
 
 --Use common flows in other projects</br>
-Open folder "target" - mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to a new project "targt" folder, select mule-email-adapter.jar - "Build Path" - "Add to Build Path" <br/>
+Open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to a new project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
 
 <PRE>
 
