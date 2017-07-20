@@ -23,87 +23,35 @@
 . In mule-email-adapter-handler, open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to your project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
 . Add these lines in your "Configuration XML" <br/>
 ```html
-<blockquote>
-  <pre>
-    <code>
-		<spring:beans>
-		        <spring:import resource="classpath:utilities-adapter.xml"/>
-		</spring:beans>
-	</code>
-  </pre>
-</blockquote>
+<spring:beans>
+        <spring:import resource="classpath:utilities-adapter.xml"/>
+</spring:beans>
 ```
 <br/>
 
 . Send exception to email<br/>
 ```html
-<blockquote>
-  <pre>
-    <code>
-        <catch-exception-strategy doc:name="Catch Exception Strategy">
-            <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/exception" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
-            <set-payload value="#['You test /utilities/email/exception/test/vm \n&lt;br&gt; Exception throwed, check your email to find exception content too. \n' + exception]" doc:name="Set Payload"/>
-        </catch-exception-strategy>
-	</code>
-  </pre>
-</blockquote>
+<catch-exception-strategy doc:name="Catch Exception Strategy">
+    <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/exception" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
+    <set-payload value="#['You test /utilities/email/exception/test/vm \n&lt;br&gt; Exception throwed, check your email to find exception content too. \n' + exception]" doc:name="Set Payload"/>
+</catch-exception-strategy>
 ```
 
 . Send payload to email<br/>
-
-<![CDATA[
+```html
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/payload" connector-ref="utilitiesAdapter_VM" doc:name="VM"/>
-]]>
+```
+<br/>
 
-
-<![CDATA[
-    <flow name="/utilities/email/exception/test">
-        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/exception/test" allowedMethods="GET" doc:name="/utilities/exception/test"/>
-        <set-payload value="Kun Ji's test content as a payload." doc:name="Set test Payload"/>
-        <scripting:transformer doc:name="throw exception">
-            <scripting:script engine="JavaScript"><![CDATA[throw 'Throw a exception to test utilities-adapter VM \n';]]></scripting:script>
-        </scripting:transformer>
-        <catch-exception-strategy doc:name="Catch Exception Strategy">
-            <set-property propertyName="appname" value="#[app.name]" doc:name="Property appname"/>
-            <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/exception" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
-            <set-payload value="#['You test /utilities/email/exception/test/vm \n&lt;br&gt; Exception throwed, check your email to find exception content too. \n' + exception]" doc:name="Set Payload"/>
-        </catch-exception-strategy>
-    </flow>
-    <flow name="/utilities/email/log/test">
-        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/log/test" doc:name="HTTP"/>
-        <set-payload value="Test log payload to message email" doc:name="Set Payload"/>
-        <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/log" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
-    </flow>
-    <flow name="/utilities/log/test">
-        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/log/test" doc:name="HTTP"/>
-        <set-payload value="Test log payload" doc:name="Set a Payload"/>
-        <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/log" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
-    </flow>
-    <flow name="/utilities/email/payload/test">
-        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/payload/test" doc:name="HTTP"/>
-        <set-property propertyName="flowname" value="#[context:serviceName]" doc:name="Property flowname"/>
-        <set-payload value="send payload to email - test
-
-Remmeber adding the original flow name to content
-
-context:serviceName = #[context:serviceName]" doc:name="Set Payload"/>
-        <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/payload" connector-ref="utilitiesAdapter_VM" doc:name="VM"/>
-    </flow>
-    <flow name="/utilities/email/note/test">
-        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/note/test" doc:name="HTTP"/>
-        <set-property propertyName="subject" value="Email subject test" doc:name="subject"/>
-        <set-payload value="#['subject =' + message.outboundProperties.subject +'\n\n' + payload]" doc:name="Set Payload"/>
-        <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/note" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
-    </flow>
- ]]
+--How does it work<br>
+VM path is used for your project flow to invoke email adapters.
+Adapter flows request HTTP in handler through http.port 8383
+ 
 
 --Make it yours<br/>
 Checkout or download this repository to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
 Anypoint. After your changes, export the adapter as a zip without project files, then re-name it to be .jar
 copy and drop to a user project and mule-email-adapter-handler, select the .jar to "add to build path".</br>
 
---Connection between adapter and handler. Open test flows to find:</br>
-Queue path</br>
-Http request path and port</br>
 
 
