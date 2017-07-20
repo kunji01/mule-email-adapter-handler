@@ -48,3 +48,5 @@ flows/
 target/classes
 target/test-classes
 src/main/api/.repository/ 
+src/main/resources/snippet
+src/test/resources/
