@@ -23,21 +23,29 @@
 . In mule-email-adapter-handler, open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to your project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
 . Add these lines in your "Configuration XML" <br/>
 
-<![CDATA[
-<spring:beans>
-        <spring:import resource="classpath:utilities-adapter.xml"/>
-</spring:beans>
-]]>
+<blockquote>
+  <pre>
+    <code>
+		<spring:beans>
+		        <spring:import resource="classpath:utilities-adapter.xml"/>
+		</spring:beans>
+	</code>
+  </pre>
+</blockquote>
 
 <br/>
 
 . Send exception to email<br/>
-<![CDATA[
+<blockquote>
+  <pre>
+    <code>
         <catch-exception-strategy doc:name="Catch Exception Strategy">
             <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/exception" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
             <set-payload value="#['You test /utilities/email/exception/test/vm \n&lt;br&gt; Exception throwed, check your email to find exception content too. \n' + exception]" doc:name="Set Payload"/>
         </catch-exception-strategy>
-]]>
+	</code>
+  </pre>
+</blockquote>
 
 . Send payload to email<br/>
 
