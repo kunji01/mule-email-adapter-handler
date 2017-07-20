@@ -47,6 +47,8 @@
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/note" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
 ```
 
+. Deploy this mule-email-adapter to the Mule runtime server where you deploy your applications<br/>
+
 --How does it work<br>
 . VM path is used for your project flow to invoke email adapters<br/>
 . Adapter flows request HTTP in handler through http.port 8383<br/>
