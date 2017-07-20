@@ -48,8 +48,9 @@
 ```
 
 --How does it work<br>
-VM path is used for your project flow to invoke email adapters<br/>
-Adapter flows request HTTP in handler through http.port 8383<br/>
+. VM path is used for your project flow to invoke email adapters<br/>
+. Adapter flows request HTTP in handler through http.port 8383<br/>
+. Open utilities-test.xml to explore<br/>
  
 
 --Make it yours<br/>
