@@ -51,7 +51,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/note" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
 ```
 
-. Deploy this mule-email-adapter to the Mule runtime server where you deploy your applications<br/>
+. Deploy this mule-email-adapter-handler to the Mule runtime server where you deploy your applications<br/>
 
 --How does it work<br>
 . VM path is used for your project flow to invoke email adapters<br/>
@@ -60,9 +60,9 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
  
 
 --Make it yours<br/>
-Clone or download this repository and repository mule-email-adapter to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
+Clone or download this repository and repository mule-email-adapter to your Anypoint studio, open flows to make changes. If you need to change adapters, clone project mule-email-adapter to your
 Anypoint. After your changes, export the adapter as a zip without project files, then re-name it to be .jar
-copy and drop to a user project and to project mule-email-adapter-handler, select the .jar to "add to build path".</br>
+copy and drop to a user project and to project mule-email-adapter-handler, select the .jar to "add to build path". Change the respective handler flows in mule-email-adapter-handler too.</br>
 
 
 
