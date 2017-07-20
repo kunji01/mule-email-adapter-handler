@@ -84,9 +84,9 @@ context:serviceName = #[context:serviceName]" doc:name="Set Payload"/>
 
 
 --Make it yours<br/>
-Open the flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
+Checkout or download this repository to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
 Anypoint. After your changes, export the adapter as a zip without project files, then re-name it to be .jar
-copy and drop to a user project and mule-email-adapter-handler, select the .jar to "add to build path".</br>v
+copy and drop to a user project and mule-email-adapter-handler, select the .jar to "add to build path".</br>
 
 --Connection between adapter and handler. Open test flows to find:</br>
 Queue path</br>
