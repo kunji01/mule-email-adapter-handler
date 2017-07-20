@@ -8,10 +8,13 @@
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
 •	Changes in the handler only and re-deploy it for all user applications</br>
 
+--install
+Download Mule Studio project released zip <a href="https://github.com/kunji01/mule-email-adapter-handler/files/1162714/mule-email-adapter-handler.zip"> mule-email-adapter-handler.zip </a> and import to your Anypoint studio.</br>
+ or<br/>
+Clone or download zip to import this repository to your Anypoint studio</br>
+Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob/master/target/mule-email-adapter.jar">mule-email-adapter.jar</a> and place it to target folder and "Add to Build Path" to get ride of errors. This jar can be exported from repository mule-email-adapter.<br/>
 
 --Test</br>
-. Clone or download zip to import this repository to your Anypoint studio</br>
-. Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob/master/target/mule-email-adapter.jar">mule-email-adapter.jar</a> and place it to target folder and "Add to Build Path" to get ride of errors. This jar can be exported from repository mule-email-adapter.<br/>
 . Open adapter-handler-dv.properties to change the email related properties to yours</br>
 . Run it. The default http.port is 8383</br>
 . http://localhost:8383/email/address to add your email address for default on all "Email for".</br>
