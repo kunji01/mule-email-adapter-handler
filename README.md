@@ -7,6 +7,7 @@
 •	Log integration activities to monitoring app and/or send emails. </br>
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
 
+
 --Test it</br>
 . Checkout this repository to your Anypoint studio</br>
 . Open adapter-handler-dv.properties to change the email related properties to yours</br>
@@ -20,8 +21,8 @@
 --Use common flows in other projects</br>
 Open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to a new project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
 
-<PRE>
 
+<![CDATA[
     <flow name="/utilities/email/exception/test">
         <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/exception/test" allowedMethods="GET" doc:name="/utilities/exception/test"/>
         <set-payload value="Kun Ji's test content as a payload." doc:name="Set test Payload"/>
@@ -80,8 +81,7 @@ context:serviceName = #[context:serviceName]" doc:name="Set Payload"/>
         <set-payload value="#['subject =' + message.outboundProperties.subject +'\n\n' + payload]" doc:name="Set Payload"/>
         <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/note" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
     </flow>
- </PRE>
-
+ ]
 
 --Make it yours<br/>
 Checkout or download this repository to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
