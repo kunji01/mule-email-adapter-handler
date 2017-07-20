@@ -22,7 +22,7 @@
 --Use flows in your projects</br>
 . In mule-email-adapter-handler, open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to your project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
 . Add these lines in your "Configuration XML" <br/>
-
+```html
 <blockquote>
   <pre>
     <code>
@@ -32,10 +32,11 @@
 	</code>
   </pre>
 </blockquote>
-
+```
 <br/>
 
 . Send exception to email<br/>
+```html
 <blockquote>
   <pre>
     <code>
@@ -46,6 +47,7 @@
 	</code>
   </pre>
 </blockquote>
+```
 
 . Send payload to email<br/>
 
