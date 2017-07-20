@@ -45,4 +45,6 @@ local.properties
 .studio/
 flows/
 #target/
+target/classes
+target/test-classes
 src/main/api/.repository/ 
