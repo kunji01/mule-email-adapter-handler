@@ -1,7 +1,0 @@
-Flow:	#[message.inboundProperties.'flowname']
-
-Application:	#[message.inboundProperties.'appname']
-
-Cause:	#[message.inboundProperties.'exception']
-
-Payload:	#[payload]
