@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mulerequester="http://www.mulesoft.org/schema/mule/mulerequester" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/mulerequester http://www.mulesoft.org/schema/mule/mulerequester/current/mule-mulerequester.xsd">
+    <sub-flow name="reademailaddress">
+        <mulerequester:request resource="file://../emailaddress/#[flowVars.filename]?connector=no-delete-file-connector" doc:name="Mule Requester"/>
+        <set-payload value="#[(payload == empty) ? '' : payload]" doc:name="Set Payload"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+    </sub-flow>
+    <sub-flow name="getemailaddress">
+    	<set-variable variableName="pos" value="#[(message.inboundProperties.'flowname'==empty?0:message.inboundProperties.'flowname').lastIndexOf('-v')]" doc:name="pos"/>
+        <set-variable variableName="appname" value="#[(flowVars.pos &gt; 0)?message.inboundProperties.'appname'.substring(0, pos):message.inboundProperties.'appname']" doc:name="appname"/>
+        <set-variable variableName="filename" value="#[flowVars.type + (flowVars.appname == empty?'default.txt':(flowVars.appname + '.txt')).replaceAll('/','').replaceAll(' ','').replaceAll('-','')]" doc:name="filename Variable"/>
+        <logger message="#['EMAIL-ADDRESS-FILE-NAME: ' + flowVars.filename]" level="DEBUG" doc:name="Logger"/>
+        <enricher target="#[message.outboundProperties.emailaddress]" doc:name="Message Enricher">
+            <flow-ref name="reademailaddress" doc:name="reademailaddress"/>
+        </enricher>
+        <choice doc:name="Choice">
+            <when expression="#[message.outboundProperties.emailaddress == empty]">
+                <set-variable variableName="filename" value="#[flowVars.type + 'default.txt']" doc:name="filename type-default.txt"/>
+                <enricher target="#[message.outboundProperties.emailaddress]" doc:name="get default Message Enricher">
+                    <flow-ref name="reademailaddress" doc:name="reademailaddress"/>
+                </enricher>
+            </when>
+            <otherwise>
+                <set-variable doc:name="do nothing" value="" variableName="donothing"/>
+            </otherwise>
+        </choice>
+    </sub-flow>
+    <!-- smtp:connector name="utilitieshandler_SMTP" contentType="text/html" fromAddress="#[message.inboundProperties.'emailaddress']" validateConnections="true" doc:name="SMTP"/ -->
+   
+    <flow name="/utilities-handler/email/exception">
+        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/exception" doc:name="/utilities/email/exception"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <set-payload value=" #[(payload.length() &gt; 1000)?payload.substring(0, 999):payload]" doc:name="Set Payload"/>
+        <!-- object-to-string-transformer doc:name="Object to String"/ -->
+        <set-property propertyName="flowname" value="#[message.inboundProperties.'flowname' == empty?'':message.inboundProperties.'flowname']" doc:name="Property flowname"/>
+        <set-variable variableName="type" value="error-" doc:name="type"/>
+        <flow-ref name="getemailaddress" doc:name="getemailaddress"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.outboundProperties.emailaddress != empty]">
+                <set-property propertyName="emailaddress" value="#[(message.outboundProperties.emailaddress).replaceAll(' ', '')]" doc:name="clean emailaddress"/>
+                <parse-template location="./exception-emailtemplate.txt" doc:name="Parse Template"/>
+                <smtp:outbound-endpoint host="${email.host}" port="${email.port}" user="${email.user}" password="${email.passwd}" to="#[message.outboundProperties.'emailaddress']" from="${email.from}" subject="#[' ${env.name} Mule exception - ' + message.inboundProperties.'appname']" responseTimeout="30000" mimeType="text/html" doc:name="outbound SMTP"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="donothing" value="" doc:name="do nothing"/>
+            </otherwise>
+        </choice>
+        <exception-strategy ref="utilitieshandler_Exception_Strategy" doc:name="utilitieshandler_Exception_Strategy"/>
+    </flow>
+    <flow name="/utilities-handler/email/message">
+        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/message" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="mule message payload to String"/>
+        <set-property propertyName="flowname" value="#[message.inboundProperties.'flowname' == empty?'':message.inboundProperties.'flowname']" doc:name="Property flowname"/>
+        <set-variable variableName="type" value="message-" doc:name="type"/>
+        <flow-ref name="getemailaddress" doc:name="getemailaddress"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.outboundProperties.emailaddress != empty]">
+                <set-property propertyName="emailaddress" value="#[(message.outboundProperties.emailaddress).replaceAll(' ', '')]" doc:name="clean emailaddress"/>
+                <smtp:outbound-endpoint host="${email.host}" port="${email.port}" user="${email.user}" password="${email.passwd}" to="#[message.outboundProperties.'emailaddress']" from="${email.from}" subject="#['${env.name} Mule message - ' + message.inboundProperties.'flowname']" responseTimeout="10000" mimeType="text/html" doc:name="SMTP"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="donothing" value="" doc:name="do nothing"/>
+            </otherwise>
+        </choice>
+        
+        <exception-strategy ref="utilitieshandler_Exception_Strategy" doc:name="utilitieshandler_Exception_Strategy"/>
+    </flow>
+    <flow name="/utilities-handler/email/log">
+        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/log" doc:name="HTTP"/>
+        <expression-component doc:name="timestr_Expression"><![CDATA[if ( flowVars.timestr == empty){
+			    flowVars.timestr = server.dateTime.format("MM-dd-yyyyy HH:mm:ss");
+			}]]></expression-component>
+        <set-property propertyName="flowname" value="#[message.inboundProperties.'flowname' == empty?'':message.inboundProperties.'flowname']" doc:name="Property flowname"/>
+        <logger message="#['APPNAME: ' + message.inboundProperties.appname + ' -' + message.outboundProperties.'appname']" level="INFO" doc:name="Logger"/>
+        <object-to-string-transformer doc:name="payload to String"/>
+        <set-payload value="#[flowVars.timestr + '\n']#[message.outboundProperties.flowname + '\n\n'] #[payload]  " doc:name="Set Payload"/>
+        <set-variable variableName="type" value="log-" doc:name="type"/>
+        <flow-ref name="getemailaddress" doc:name="getemailaddress"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.outboundProperties.emailaddress != empty]">
+                <set-property propertyName="emailaddress" value="#[(message.outboundProperties.emailaddress).replaceAll(' ', '')]" doc:name="clean emailaddress"/>
+                <smtp:outbound-endpoint host="${email.host}" port="${email.port}" user="${email.user}" password="${email.passwd}" to="#[message.outboundProperties.'emailaddress']" from="${email.from}" subject="#['${env.name} Mule log ' + message.inboundProperties.'flowname']" responseTimeout="10000" mimeType="text/html" doc:name="SMTP"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="donothing" value="" doc:name="do nothing"/>
+            </otherwise>
+        </choice>
+        
+        <exception-strategy ref="utilitieshandler_Exception_Strategy" doc:name="utilitieshandler_Exception_Strategy"/>
+    </flow>
+    <flow name="/utilities-handler/log">
+        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/log" doc:name="HTTP"/>
+        
+        <expression-component doc:name="timestr_Expression"><![CDATA[if ( flowVars.timestr == empty){
+			    flowVars.timestr = server.dateTime.format("MM-dd-yyyyy HH:mm:ss");
+			}]]>
+		</expression-component>
+		
+        <set-property propertyName="flowname" value="#[message.inboundProperties.'flowname' == empty?'':message.inboundProperties.'flowname']" doc:name="Property flowname"/>
+        <object-to-string-transformer doc:name="payload to String"/>
+        <set-payload value="#[flowVars.timestr + '\n'] #[message.outboundProperties.flowname + '\n\n'] #[payload]" doc:name="Set Payload"/>
+        <logger message="#[message.outboundProperties.flowname + '\n\n' + payload]" level="INFO" doc:name="Logger"/>
+        
+        <exception-strategy ref="utilitieshandler_Exception_Strategy" doc:name="utilitieshandler_Exception_Strategy"/>
+    </flow>
+    <flow name="/utilities-handler/email/payload">
+        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/payload" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="payload to String"/>
+        <set-payload value=" #[(payload.length() &gt; 10000)?payload.substring(0, 9999):payload]" doc:name="Set Payload"/>
+        <set-variable variableName="type" value="payload-" doc:name="type"/>
+        <flow-ref name="getemailaddress" doc:name="getemailaddress"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.outboundProperties.emailaddress != empty]">
+                <set-property propertyName="emailaddress" value="#[(message.outboundProperties.emailaddress).replaceAll(' ', '')]" doc:name="clean emailaddress"/>
+                <smtp:outbound-endpoint host="${email.host}" port="${email.port}" user="${email.user}" password="${email.passwd}" to="#[message.outboundProperties.'emailaddress']" from="${email.from}" subject="#['${env.name} Mule payload - ' + message.inboundProperties.'flowname']]" responseTimeout="10000" mimeType="text/html" doc:name="outbound SMTP"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="donothing" value="" doc:name="do nothing"/>
+            </otherwise>
+        </choice>
+        <exception-strategy ref="utilitieshandler_Exception_Strategy" doc:name="utilitieshandler_Exception_Strategy"/>
+    </flow>
+    <flow name="/utilities-handler/email/note">
+        <http:listener config-ref="sharedHTTP_Listener" path="/utilities/email/note" doc:name="/utitilies/email/note"/>
+        <object-to-string-transformer doc:name="content payload to String"/>
+        <set-variable variableName="type" value="note-" doc:name="type"/>
+        <flow-ref name="getemailaddress" doc:name="getemailaddress"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.outboundProperties.emailaddress != empty]">
+                <set-property propertyName="emailaddress" value="#[(message.outboundProperties.emailaddress).replaceAll(' ', '')]" doc:name="clean emailaddress"/>
+                <smtp:outbound-endpoint host="${email.host}" port="${email.port}" user="${email.user}" password="${email.passwd}" to="#[message.outboundProperties.'emailaddress']" from="${email.from}" subject="#[message.inboundProperties.'subject' + ' - ${env.name}']" responseTimeout="10000" mimeType="text/html" doc:name="outbound SMTP"/>
+            </when>
+            <otherwise>
+                <set-variable variableName="donothing" value="" doc:name="do nothing"/>
+            </otherwise>
+        </choice>
+        <exception-strategy ref="utilitieshandler_Exception_Strategy" doc:name="utilitieshandler_Exception_Strategy"/>
+    </flow>
+</mule>

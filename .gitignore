@@ -37,12 +37,12 @@ local.properties
 .cproject
 
 # PDT-specific
-.buildpath
+#.buildpath
 
 # --------------- #
 # Studio-specific #
 # --------------- #
 .studio/
 flows/
-target/
+#target/
 src/main/api/.repository/ 
