@@ -27,23 +27,23 @@
 <spring:beans>
         <spring:import resource="classpath:utilities-adapter.xml"/>
 </spring:beans>
-]]
+]]>
 
 <br/>
 
-. Send exception to email
+. Send exception to email<br/>
 <![CDATA[
         <catch-exception-strategy doc:name="Catch Exception Strategy">
             <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/exception" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
             <set-payload value="#['You test /utilities/email/exception/test/vm \n&lt;br&gt; Exception throwed, check your email to find exception content too. \n' + exception]" doc:name="Set Payload"/>
         </catch-exception-strategy>
-]]
+]]>
 
-. Send payload to email
+. Send payload to email<br/>
 
 <![CDATA[
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/payload" connector-ref="utilitiesAdapter_VM" doc:name="VM"/>
-]]
+]]>
 
 
 <![CDATA[
