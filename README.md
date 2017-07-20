@@ -20,20 +20,18 @@
 . check your email inbox</br><br/>
 
 --Use flows in your projects</br>
-. In mule-email-adapter-handler, open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to your project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
-. Add these lines in your "Configuration XML" <br/>
+. In mule-email-adapter-handler<br/>
+. Open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to your project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
+. Add these lines in your flow "Configuration XML"
 ```html
 <spring:beans>
         <spring:import resource="classpath:utilities-adapter.xml"/>
 </spring:beans>
 ```
-<br/>
-
 . Send exception to email<br/>
 ```html
 <catch-exception-strategy doc:name="Catch Exception Strategy">
     <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/exception" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
-    <set-payload value="#['You test /utilities/email/exception/test/vm \n&lt;br&gt; Exception throwed, check your email to find exception content too. \n' + exception]" doc:name="Set Payload"/>
 </catch-exception-strategy>
 ```
 
@@ -41,17 +39,16 @@
 ```html
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/payload" connector-ref="utilitiesAdapter_VM" doc:name="VM"/>
 ```
-<br/>
 
 --How does it work<br>
-VM path is used for your project flow to invoke email adapters.
-Adapter flows request HTTP in handler through http.port 8383
+VM path is used for your project flow to invoke email adapters<br/>
+Adapter flows request HTTP in handler through http.port 8383<br/>
  
 
 --Make it yours<br/>
 Checkout or download this repository to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
 Anypoint. After your changes, export the adapter as a zip without project files, then re-name it to be .jar
-copy and drop to a user project and mule-email-adapter-handler, select the .jar to "add to build path".</br>
+copy and drop to a user project and to project mule-email-adapter-handler, select the .jar to "add to build path".</br>
 
 
 
