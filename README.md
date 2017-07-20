@@ -8,8 +8,8 @@
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
 
 --Test it</br>
-. Check this repository to your Anypoint studio</br>
-. Open adapter-handler-dv.properties to change email related properties to yours</br>
+. Checkout this repository to your Anypoint studio</br>
+. Open adapter-handler-dv.properties to change the email related properties to yours</br>
 . Run it. The default http.port is 8383</br>
 . http://localhost:8383/email/address to add your email address for default on all "Email for".</br>
 . http://localhost:8383/utilities/email/exception/test</br>
