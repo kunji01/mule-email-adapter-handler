@@ -19,6 +19,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 . Run it. The default http.port is 8383</br>
 . http://localhost:8383/email/address to add your email address for default on all "Email for".</br>
 . http://localhost:8383/utilities/email/exception/test</br>
+. http://localhost:8383/utilities/email/payload/test</br>
 . http://localhost:8383/utilities/email/note/test</br>
 . http://localhost:8383/utilities/email/log/test</br>
 . check your email inbox</br><br/>
