@@ -40,6 +40,13 @@
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/payload" connector-ref="utilitiesAdapter_VM" doc:name="VM"/>
 ```
 
+. Send your email<br/>
+```html
+<set-property propertyName="subject" value="Your Email subject" doc:name="subject"/>
+<set-property propertyName="content" value="Your Email content" doc:name="content"/>
+<vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/note" doc:name="VM" connector-ref="utilitiesAdapter_VM"/>
+```
+
 --How does it work<br>
 VM path is used for your project flow to invoke email adapters<br/>
 Adapter flows request HTTP in handler through http.port 8383<br/>
