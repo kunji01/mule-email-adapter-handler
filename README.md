@@ -8,7 +8,7 @@
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
 •	Changes in the handler only and re-deploy it for all user applications</br>
 
---install
+--Install<br/>
 Download Mule Studio project released zip <a href="https://github.com/kunji01/mule-email-adapter-handler/files/1162714/mule-email-adapter-handler.zip"> mule-email-adapter-handler.zip </a> and import to your Anypoint studio.</br>
  or<br/>
 Clone or download zip to import this repository to your Anypoint studio</br>
