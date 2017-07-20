@@ -11,7 +11,7 @@
 
 --Test</br>
 . Clone or download zip to import this repository to your Anypoint studio</br>
-. Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob/master/target/mule-email-adapter.jar">mule-email-adapter.jar</a> and place it to target folder and "Add to Build Path" to get ride of errors.<br/>
+. Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob/master/target/mule-email-adapter.jar">mule-email-adapter.jar</a> and place it to target folder and "Add to Build Path" to get ride of errors. This jar can be exported from repository mule-email-adapter.<br/>
 . Open adapter-handler-dv.properties to change the email related properties to yours</br>
 . Run it. The default http.port is 8383</br>
 . http://localhost:8383/email/address to add your email address for default on all "Email for".</br>
@@ -57,7 +57,7 @@
  
 
 --Make it yours<br/>
-Checkout or download this repository to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
+Clone or download this repository and repository mule-email-adapter to your Anypoint studio, open flows to make changes. If you need to change adapters, checkout project mule-email-adapter to your
 Anypoint. After your changes, export the adapter as a zip without project files, then re-name it to be .jar
 copy and drop to a user project and to project mule-email-adapter-handler, select the .jar to "add to build path".</br>
 
