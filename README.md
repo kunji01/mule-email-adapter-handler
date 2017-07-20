@@ -6,6 +6,7 @@
 •	Send an email in a flow with dynamic subject and content. </br>
 •	Log integration activities to monitoring app and/or send emails. </br>
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
+.   Changes in the handler and re-deploy for all user applications</br>
 
 
 --Test it</br>
