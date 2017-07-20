@@ -24,7 +24,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 . http://localhost:8383/utilities/email/log/test</br>
 . check your email inbox</br><br/>
 
---Use flows in your projects</br>
+--Add email in your projects</br>
 . In mule-email-adapter-handler<br/>
 . Open folder "target" -&gt; mule-email-adapter.jar. Copy this file mule-email-adapter.jar and then drop to your project "target" folder, select mule-email-adapter.jar -&gt; "Build Path" -&gt; "Add to Build Path" <br/>
 . Add these lines in your flow "Configuration XML"
