@@ -9,7 +9,7 @@ A jar file is ready to be added to the refrenced library of your application as 
 •	Send an email in a flow with dynamic subject and content. </br>
 •	Log integration activities to monitoring app and/or send email. </br>
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
-•	Change in the handler only and re-deploy to be visible for all other user applications</br>
+•	Change the handler only and re-deploy to be visible for all other user applications</br>
 
 --Install<br/>
 Download Mule Studio project released zip <a href="https://github.com/kunji01/mule-email-adapter-handler/files/1162714/mule-email-adapter-handler.zip"> mule-email-adapter-handler.zip </a> and import to your Anypoint studio.</br>
