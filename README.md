@@ -2,9 +2,10 @@
 
 --It is a ready to use Mule application for other aplications running in the same Mule runtime server to connect to send email in adapter-handler way.</br>
 
-A jar file is ready to be added to the refrenced library of your application as an adapter to connect to this application as a handler, your application then is powered with:<br/>
+A jar file is ready to be added to the refrenced library of your application as an adapter to connect to this handler application, your application then is powered with:<br/>
 
-•	Catch exceptions globally to send email by simply adding a VM processor. </br>
+•	Add a VM processor to send email in a flow.<br/>
+•	Catch exceptions globally to send an email. </br>
 •	Send an email in a flow with dynamic subject and content. </br>
 •	Log integration activities to monitoring app and/or send email. </br>
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
