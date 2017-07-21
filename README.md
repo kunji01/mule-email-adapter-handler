@@ -66,7 +66,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 
 --Make it yours<br/>
 Clone or download this repository and repository <a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> to your Anypoint studio, open flows to make changes. If you need to change adapters, export the adapter as a zip without project files, then re-name it to be .jar
-copy and drop to the user applications and to mule-email-adapter-handler application, select the .jar to "add to build path". Change the respective handler flows in mule-email-adapter-handler too.</br></br>
+copy and drop to the user applications and to mule-email-adapter-handler application, select the .jar to "add to build path". Change the respective handler flows in mule-email-adapter-handler too.</br>
 
 Download <a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> and <a href="https://github.com/kunji01/mule-email-adapter-handler">mule-email-adapter-handler</a> to be templates and then create your adapter-handler application to do new common things.
 
