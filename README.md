@@ -55,7 +55,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 ```
 
 . Deploy this mule-email-adapter-handler to the Mule runtime server where you deploy your applications<br/>
-. Manage email address for applications by its name at http:yourservername:8383/email/address during run time<br/>
+. Manage email address for applications by its name at http://yourservername:8383/email/address during run time<br/>
 
 --How does it work<br>
 . VM path is used for your project flow to invoke email adapters<br/>
