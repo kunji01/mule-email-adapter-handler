@@ -59,10 +59,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 . Manage email address for applications by its name at http://yourservername:8383/email/address during run time<br/>
 
 --How does it work<br>
-. VM path is used for your project flow to invoke email adapters<br/>
-. Adapter flows request HTTP in handler through http.port 8383<br/>
-. Open utilities-test.xml to explore<br/>
- 
+<a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> contains input point VM with queue path to be hooked within a flow and then pass a http request to the REST API in <a href="https://github.com/kunji01/mule-email-adapter-handler">mule-email-adapter-handler</a> where real codes are implemented.<br/> 
 
 --Make it yours<br/>
 Clone or download this repository and repository <a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> to your Anypoint studio, open flows to make changes. If you need to change adapters, export the adapter as a zip without project files, then re-name it to be .jar
