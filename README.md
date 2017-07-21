@@ -2,7 +2,7 @@
 
 --It is a ready to use Mule application for other aplications running in the same Mule runtime server to connect to send email in adapter-handler way.</br>
 
-A jar file is ready to be added to the refrenced library of your application as an adapter to connect to this handler application, your application then is powered with:<br/>
+The adapter jar file is included. You can download and add to to the refrenced library of your application to connect to this handler application, your application then is powered with:<br/>
 
 •	Add a VM processor to send email in a flow.<br/>
 •	Catch exceptions globally to send an email. </br>
@@ -18,7 +18,7 @@ Clone or download zip to import this repository to your Anypoint studio</br>
 Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob/master/target/mule-email-adapter.jar">mule-email-adapter.jar</a> and place it to target folder and "Add to Build Path" to get ride of errors. This jar can be exported from repository mule-email-adapter.<br/>
 
 --Test</br>
-. Open adapter-handler-dv.properties to change the email related properties to yours</br>
+. After import this handler application to Anypoint studio, open adapter-handler-dv.properties to change the email related properties to yours</br>
 . Run it. The default http.port is 8383</br>
 . http://localhost:8383/email/address to add your email address for default on all "Email for".</br>
 . http://localhost:8383/utilities/email/exception/test</br>
@@ -48,7 +48,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 <vm:outbound-endpoint exchange-pattern="one-way" path="/utilities/email/payload" connector-ref="utilitiesAdapter_VM" doc:name="VM"/>
 ```
 
-. Send your email<br/>
+. Send your email. If you do not set content property, the payload will be the email content<br/>
 ```html
 <set-property propertyName="subject" value="Your Email subject" doc:name="subject"/>
 <set-property propertyName="content" value="Your Email content" doc:name="content"/>
@@ -65,9 +65,10 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
  
 
 --Make it yours<br/>
-Clone or download this repository and repository <a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> to your Anypoint studio, open flows to make changes. If you need to change adapters, clone project mule-email-adapter to your
-Anypoint. After your changes, export the adapter as a zip without project files, then re-name it to be .jar
-copy and drop to a user project and to project mule-email-adapter-handler, select the .jar to "add to build path". Change the respective handler flows in mule-email-adapter-handler too.</br>
+Clone or download this repository and repository <a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> to your Anypoint studio, open flows to make changes. If you need to change adapters, export the adapter as a zip without project files, then re-name it to be .jar
+copy and drop to the user applications and to mule-email-adapter-handler application, select the .jar to "add to build path". Change the respective handler flows in mule-email-adapter-handler too.</br></br>
+
+Download <a href="https://github.com/kunji01/mule-email-adapter">mule-email-adapter</a> and <a href="https://github.com/kunji01/mule-email-adapter-handler">mule-email-adapter-handler</a> to be templates and then create your adapter-handler application to do new common things.
 
 
 
