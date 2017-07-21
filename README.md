@@ -1,15 +1,14 @@
 # mule-email-adapter-handler
 
---It is a ready to use Mule application for other aplications running in the same Mule runtime server to connect to send email in adapter-handler way. The adapter is an exported jar file to add to the static library of a project, handler is a Mule application deployed to the runtime server.</br>
+--It is a ready to use Mule application for other applications running in the same Mule runtime server to connect to send email in adapter-handler way. The adapter is an exported jar file to add to the static library of a project, handler is a Mule application deployed to the runtime server.<br/>
 
-The adapter jar file is included. You can download and add to the refrenced library of your application to connect to this handler application, your application then is powered with:<br/>
-
+The adapter jar file is included. You can download and add to the referenced library of your application to connect to this handler application, your application then is powered with:<br/>
 •	Add a VM processor to send email in a flow.<br/>
-•	Catch exceptions globally to send an email. </br>
-•	Send an email in a flow with dynamic subject and content. </br>
-•	Log integration activities to monitoring app and/or send email. </br>
-•	Centrally manage Email addresses for individual application without interrupting operations.</br>
-•	Change the handler only and re-deploy to be visible for all other user applications</br>
+•	Catch exceptions globally to send an email. <br/>
+•	Send an email in a flow with dynamic subject and content.<br/>
+•	Log integration activities to monitoring app and/or send email.<br/>
+•	Centrally manage Email addresses for individual application without interrupting operations.<br/>
+•	Change the handler only and re-deploy to be visible for all other user applications.<br/>
 
 --Install<br/>
 Download Mule Studio project released zip <a href="https://github.com/kunji01/mule-email-adapter-handler/files/1162714/mule-email-adapter-handler.zip"> mule-email-adapter-handler.zip </a> and import to your Anypoint studio.</br>
