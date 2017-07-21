@@ -26,6 +26,7 @@ local.properties
 # Recommended for Maven based projects 
 .project
 .classpath
+.gitignore
 
 # External tool builders
 .externalToolBuilders/
