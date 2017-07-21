@@ -1,12 +1,14 @@
 # mule-email-adapter-handler
 
---Share email common flows in Mule projects in adapter-handler way.</br>
+--It is a ready to use Mule application for other aplications running in the same Mule runtime server to connect to send email in adapter-handler way.</br>
 
-•	Catch exceptions globally in an application to send emails by simply adding a VM processor. </br>
+A jar file is ready to be added to the refrenced library of your application as an adapter to connect to this application as a handler, your application then is powered with:<br/>
+
+•	Catch exceptions globally to send email by simply adding a VM processor. </br>
 •	Send an email in a flow with dynamic subject and content. </br>
-•	Log integration activities to monitoring app and/or send emails. </br>
+•	Log integration activities to monitoring app and/or send email. </br>
 •	Centrally manage Email addresses for individual application without interrupting operations.</br>
-•	Change in the handler only and re-deploy to be visible for all user applications</br>
+•	Change in the handler only and re-deploy to be visible for all other user applications</br>
 
 --Install<br/>
 Download Mule Studio project released zip <a href="https://github.com/kunji01/mule-email-adapter-handler/files/1162714/mule-email-adapter-handler.zip"> mule-email-adapter-handler.zip </a> and import to your Anypoint studio.</br>
@@ -53,6 +55,7 @@ Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob
 ```
 
 . Deploy this mule-email-adapter-handler to the Mule runtime server where you deploy your applications<br/>
+. Manage email address for applications by its name at http:yourservername:8383/email/address during run time<br/>
 
 --How does it work<br>
 . VM path is used for your project flow to invoke email adapters<br/>
