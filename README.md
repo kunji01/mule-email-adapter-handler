@@ -13,9 +13,6 @@ The adapter jar file is included. You can download and add to the refrenced libr
 
 --Install<br/>
 Download Mule Studio project released zip <a href="https://github.com/kunji01/mule-email-adapter-handler/files/1162714/mule-email-adapter-handler.zip"> mule-email-adapter-handler.zip </a> and import to your Anypoint studio.</br>
- or<br/>
-Clone or download zip to import this repository to your Anypoint studio</br>
-Download jar <a href="https://github.com/kunji01/mule-email-adapter-handler/blob/master/target/mule-email-adapter.jar">mule-email-adapter.jar</a> and place it to target folder and "Add to Build Path" to get ride of errors. This jar can be exported from repository mule-email-adapter.<br/>
 
 --Test</br>
 . After import this handler application to Anypoint studio, open adapter-handler-dv.properties to change the email related properties to yours</br>
